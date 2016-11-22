@@ -16,12 +16,13 @@ ADD sh/le.sh /le.sh
 ADD sh/pullnpush.sh /pullnpush.sh
 ADD sh/entrypoint.sh /entrypoint.sh
 #
-RUN chmod +x /entrypoint.sh && chmod +x /pullnpush.sh && chmod +x /le.sh
-RUN apt-get install -y nginx && \
-    mkdir -p /etc/nginx/ssl && mkdir -p /usr/share/nginx/html && \
+RUN chmod +x /*.sh
+#
+RUN apt-get install -y nginx-full && \
     echo "[program:nginx]" >> /etc/supervisor/conf.d/supervisord.conf && \
 	echo "command = /usr/sbin/nginx" >> /etc/supervisor/conf.d/supervisord.conf && \
 	echo "user = root" >> /etc/supervisor/conf.d/supervisord.conf && \
 	echo "autostart = true" >> /etc/supervisor/conf.d/supervisord.conf
+RUN mkdir -p /etc/nginx/ssl && mkdir -p /usr/share/nginx/html
 # - >
 CMD ["/entrypoint.sh"]
