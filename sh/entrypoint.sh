@@ -63,10 +63,23 @@ setup_nginx_le () {
  		done
 	) &
 }
+
+setup_php_fpm () {
+	sed -i "s|PHP_MEMORY|${PHP_MEMORY}|g" /etc/php/7.0/fpm/php.ini
+	sed -i "s|PHP_MEMORY|${PHP_MEMORY}|g" /etc/php/7.0/fpm/pool.d/pool.conf
+	sed -i "s|PHP_PM_MAX|${PHP_PM_MAX}|g" /etc/php/7.0/fpm/pool.d/pool.conf
+	sed -i "s|PHP_PM_START|${PHP_PM_START}|g" /etc/php/7.0/fpm/pool.d/pool.conf
+	sed -i "s|PHP_PM_SPARE_MIN|${PHP_PM_SPARE_MIN}|g" /etc/php/7.0/fpm/pool.d/pool.conf
+	sed -i "s|PHP_PM_SPARE_MAX|${PHP_PM_SPARE_MAX}|g" /etc/php/7.0/fpm/pool.d/pool.conf
+}
+
 # - setup
 if [ "$FQDN" = "example.com" ]; then
 	mv /localhost /etc/nginx/sites-enabled/
 else
+	if [ "$FPM_ENABLE" = "true" ]; then
+		setup_php_fpm
+	fi
 	setup_code
 	setup_nginx_le
 fi
