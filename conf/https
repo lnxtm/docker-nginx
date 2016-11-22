@@ -1,7 +1,7 @@
 server {
   listen HTTPS ssl http2;
 #
-  server_name FQDN WWW_FQDN;
+  server_name FQDN WWW;
 ##############################################################
 # SSL
   ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # Disable SSLv3
