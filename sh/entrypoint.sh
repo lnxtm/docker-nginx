@@ -10,12 +10,10 @@ setup_code () {
 			if [ "$BRANCH" = "master" ]; then
 				cd /code && git init && git remote add origin https://$GIT_USER:$GIT_PASS@$REPO
 		    	cd /code && git pull origin master && git branch --set-upstream-to=origin/master master
-		    	export -n GIT_PASS
 			else
 				cd /code && git init && git remote add origin https://$GIT_USER:$GIT_PASS@$REPO
 		    	cd /code && git pull origin master && git branch --set-upstream-to=origin/master master
 		    	cd /code && git checkout -b ${BRANCH}
-		    	export -n GIT_PASS
 			fi
 			echo "*/15  *  *  *  * /pullnpush.sh" | crontab -u root - 
 		else
@@ -83,5 +81,6 @@ else
 	setup_code
 	setup_nginx_le
 fi
+export GIT_PASS=erased
 # - run
 /usr/bin/supervisord
