@@ -7,7 +7,6 @@ ENV HTTPS 443
 ENV FQDN example.com
 ENV W_FQDN www.example.com
 #
-ADD conf/nginx.conf /etc/nginx/nginx.conf
 ADD conf/https /https
 ADD conf/http /http
 ADD conf/localhost /localhost
@@ -18,11 +17,12 @@ ADD sh/entrypoint.sh /entrypoint.sh
 #
 RUN chmod +x /*.sh
 #
-RUN apt-get install -y nginx-full && \
-    echo "[program:nginx]" >> /etc/supervisor/conf.d/supervisord.conf && \
+RUN apt-get install -y nginx
+RUN echo "[program:nginx]" >> /etc/supervisor/conf.d/supervisord.conf && \
 	echo "command = /usr/sbin/nginx" >> /etc/supervisor/conf.d/supervisord.conf && \
 	echo "user = root" >> /etc/supervisor/conf.d/supervisord.conf && \
 	echo "autostart = true" >> /etc/supervisor/conf.d/supervisord.conf
 RUN mkdir -p /etc/nginx/ssl && mkdir -p /usr/share/nginx/html
+ADD conf/nginx.conf /etc/nginx/nginx.conf
 # - >
 CMD ["/entrypoint.sh"]
