@@ -5,7 +5,7 @@ ENV HTTP 80
 ENV HTTPS 443
 #
 ENV FQDN example.com
-ENV W_FQDN www.example.com
+ENV WWW_FQDN www.example.com
 #
 ADD conf/https /https
 ADD conf/http /http
@@ -17,7 +17,7 @@ ADD sh/entrypoint.sh /entrypoint.sh
 #
 RUN chmod +x /*.sh
 #
-RUN apt-get install -y nginx
+RUN apt-get install -y nginx letsencrypt
 RUN echo "[program:nginx]" >> /etc/supervisor/conf.d/supervisord.conf && \
 	echo "command = /usr/sbin/nginx" >> /etc/supervisor/conf.d/supervisord.conf && \
 	echo "user = root" >> /etc/supervisor/conf.d/supervisord.conf && \

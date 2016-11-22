@@ -35,23 +35,22 @@ setup_nginx_le () {
     	chmod 600 dhparams.pem
 	fi
 	if [ ! -f /http ]; then
-		mv /http /etc/nginx/sites-enabled/
 		sed -i "s|FQDN|${FQDN}|g" /etc/nginx/sites-enabled/http
 		sed -i "s|WWW_FQDN|${WWW_FQDN}|g" /etc/nginx/sites-enabled/http
 		sed -i "s|HTTP|${HTTP}|g" /etc/nginx/sites-enabled/http
 	else
-		sed -i "s|FQDN|${FQDN}|g" /etc/nginx/sites-enabled/http
-		sed -i "s|WWW_FQDN|${WWW_FQDN}|g" /etc/nginx/sites-enabled/http
-		sed -i "s|HTTP|${HTTP}|g" /etc/nginx/sites-enabled/http
+		sed -i "s|FQDN|${FQDN}|g" /http
+		sed -i "s|WWW_FQDN|${WWW_FQDN}|g" /http
+		sed -i "s|HTTP|${HTTP}|g" /http
 	fi
 	if [ ! -f /https ]; then
-		sed -i "s|FQDN|${FQDN}|g" /https
-		sed -i "s|WWW_FQDN|${WWW_FQDN}|g" /https
-		sed -i "s|HTTPS|${HTTPS}|g" /https
+		sed -i "s|FQDN|${FQDN}|g" /etc/nginx/sites-enabled/https
+		sed -i "s|WWW_FQDN|${WWW_FQDN}|g" /etc/nginx/sites-enabled/https
+		sed -i "s|HTTPS|${HTTPS}|g" /etc/nginx/sites-enabled/https
 	else
-		sed -i "s|FQDN|${FQDN}|g" $/etc/nginx/sites-enabled/https
-		sed -i "s|WWW_FQDN|${WWW_FQDN}|g" $/etc/nginx/sites-enabled/https
-		sed -i "s|HTTPS|${HTTPS}|g" $/etc/nginx/sites-enabled/https
+		sed -i "s|FQDN|${FQDN}|g" $/https
+		sed -i "s|WWW_FQDN|${WWW_FQDN}|g" $/https
+		sed -i "s|HTTPS|${HTTPS}|g" $/https
 	fi
 	(
 		sleep 5 # give nginx time to start
