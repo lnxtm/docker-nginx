@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# base test and set defauln env
-WWW_FQDN=www.${FQDN}
-
 # functions ###
 setup_code () {
 	if [ "$REPO" = "external" ]; then
@@ -34,24 +31,12 @@ setup_nginx_le () {
     	openssl dhparam -out dhparams.pem 2048
     	chmod 600 dhparams.pem
 	fi
-	if [ ! -f /http ]; then
-		sed -i "s|FQDN|${FQDN}|g" /etc/nginx/sites-enabled/http
-		sed -i "s|WWW_FQDN|${WWW_FQDN}|g" /etc/nginx/sites-enabled/http
-		sed -i "s|HTTP|${HTTP}|g" /etc/nginx/sites-enabled/http
-	else
-		sed -i "s|FQDN|${FQDN}|g" /http
-		sed -i "s|WWW_FQDN|${WWW_FQDN}|g" /http
-		sed -i "s|HTTP|${HTTP}|g" /http
-	fi
-	if [ ! -f /https ]; then
-		sed -i "s|FQDN|${FQDN}|g" /etc/nginx/sites-enabled/https
-		sed -i "s|WWW_FQDN|${WWW_FQDN}|g" /etc/nginx/sites-enabled/https
-		sed -i "s|HTTPS|${HTTPS}|g" /etc/nginx/sites-enabled/https
-	else
-		sed -i "s|FQDN|${FQDN}|g" $/https
-		sed -i "s|WWW_FQDN|${WWW_FQDN}|g" $/https
-		sed -i "s|HTTPS|${HTTPS}|g" $/https
-	fi
+	sed -i "s|FQDN|${FQDN}|g" /http
+	sed -i "s|WWW_FQDN|${WWW_FQDN}|g" /http
+	sed -i "s|HTTP|${HTTP}|g" /http
+	sed -i "s|FQDN|${FQDN}|g" $/https
+	sed -i "s|WWW_FQDN|${WWW_FQDN}|g" $/https
+	sed -i "s|HTTPS|${HTTPS}|g" $/https
 	(
  		while :
  		do
