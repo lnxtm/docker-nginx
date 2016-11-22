@@ -5,17 +5,23 @@ WWW_FQDN=www.${FQDN}
 
 # functions ###
 setup_code () {
-	if [ "$CODE" = "external" ]; then
+	if [ "$REPO" = "external" ]; then
 		echo "external code mode"
 	else
-		mkdir /code
-		if [ "$BRANCH" = "master" ]; then
-			cd /code && git init && git remote add origin https://$G_USER:$G_PASS@$CODE
-		    cd /code && git pull origin master && git branch --set-upstream-to=origin/master master
+		if ! [ -d /code/.git ]; then
+			/pullnpush.sh
 		else
-			cd /code && git init && git remote add origin https://$G_USER:$G_PASS@$CODE
-		    cd /code && git pull origin master && git branch --set-upstream-to=origin/master master
-		    cd /code && git checkout -b ${BRANCH}
+		mkdir /code
+			if [ "$BRANCH" = "master" ]; then
+				cd /code && git init && git remote add origin https://$GIT_USER:$GIT_PASS@$REPO
+		    	cd /code && git pull origin master && git branch --set-upstream-to=origin/master master
+		    	export -n GIT_PASS
+			else
+				cd /code && git init && git remote add origin https://$GIT_USER:$GIT_PASS@$REPO
+		    	cd /code && git pull origin master && git branch --set-upstream-to=origin/master master
+		    	cd /code && git checkout -b ${BRANCH}
+		    	export -n GIT_PASS
+			fi
 		fi
 		echo "*/15  *  *  *  * /pullnpush.sh" | crontab -u root - 
 	fi

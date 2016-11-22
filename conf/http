@@ -1,6 +1,6 @@
 server {
     listen HTTP;
-    server_name FQDN W_FQDN;
+    server_name FQDN WWW_FQDN;
 
     root   /usr/share/nginx/html;
 
