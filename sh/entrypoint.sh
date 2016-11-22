@@ -34,9 +34,9 @@ setup_nginx_le () {
 	sed -i "s|FQDN|${FQDN}|g" /http
 	sed -i "s|WWW_FQDN|${WWW_FQDN}|g" /http
 	sed -i "s|HTTP|${HTTP}|g" /http
-	sed -i "s|FQDN|${FQDN}|g" $/https
-	sed -i "s|WWW_FQDN|${WWW_FQDN}|g" $/https
-	sed -i "s|HTTPS|${HTTPS}|g" $/https
+	sed -i "s|FQDN|${FQDN}|g" /https
+	sed -i "s|WWW_FQDN|${WWW_FQDN}|g" /https
+	sed -i "s|HTTPS|${HTTPS}|g" /https
 	(
  		while :
  		do
