@@ -53,17 +53,25 @@ setup_nginx_le () {
 		sed -i "s|HTTPS|${HTTPS}|g" $/https
 	fi
 	(
-		sleep 5 # give nginx time to start
  		while :
  		do
- 		if [ ! -f $/etc/nginx/sites-enabled/https ]; then
- 			mv $/etc/nginx/sites-enabled/https /
+ 		if [ ! -f /etc/nginx/sites-enabled/https ]; then
+ 			if [ ! -f /etc/nginx/sites-enabled/http ]; then
+	 			mv /http /etc/nginx/sites-enabled/http
+	 		fi
  			nginx -s reload
- 			/le.sh && mv /https $/etc/nginx/sites-enabled/https
+ 			sleep 3
+ 			/le.sh && mv /https /etc/nginx/sites-enabled/https
  			nginx -s reload
  			sleep 60d
  		else
- 			/le.sh && mv /https $/etc/nginx/sites-enabled/https
+ 			if [ ! -f /etc/nginx/sites-enabled/http ]; then
+	 			mv /http /etc/nginx/sites-enabled/http
+	 		fi
+ 			mv /etc/nginx/sites-enabled/https /https 
+			nginx -s reload
+ 			sleep 3
+ 			/le.sh && mv /https /etc/nginx/sites-enabled/https
  			nginx -s reload
  			sleep 60d
  		fi
