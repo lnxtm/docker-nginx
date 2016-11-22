@@ -21,7 +21,8 @@ RUN apt-get install -y nginx
 RUN echo "[program:nginx]" >> /etc/supervisor/conf.d/supervisord.conf && \
 	echo "command = /usr/sbin/nginx" >> /etc/supervisor/conf.d/supervisord.conf && \
 	echo "user = root" >> /etc/supervisor/conf.d/supervisord.conf && \
-	echo "autostart = true" >> /etc/supervisor/conf.d/supervisord.conf
+	echo "autostart = true" >> /etc/supervisor/conf.d/supervisord.conf && \
+	rm -rf /etc/nginx/sites-enabled/default
 RUN mkdir -p /etc/nginx/ssl && mkdir -p /usr/share/nginx/html
 ADD conf/nginx.conf /etc/nginx/nginx.conf
 # - >
