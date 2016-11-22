@@ -6,9 +6,7 @@ setup_code () {
 		echo "external code mode"
 	else
 		if ! [ -d /code/.git ]; then
-			/pullnpush.sh
-		else
-		mkdir /code
+			mkdir /code
 			if [ "$BRANCH" = "master" ]; then
 				cd /code && git init && git remote add origin https://$GIT_USER:$GIT_PASS@$REPO
 		    	cd /code && git pull origin master && git branch --set-upstream-to=origin/master master
@@ -19,8 +17,10 @@ setup_code () {
 		    	cd /code && git checkout -b ${BRANCH}
 		    	export -n GIT_PASS
 			fi
+			echo "*/15  *  *  *  * /pullnpush.sh" | crontab -u root - 
+		else
+			/pullnpush.sh
 		fi
-		echo "*/15  *  *  *  * /pullnpush.sh" | crontab -u root - 
 	fi
 }
 setup_nginx_le () {

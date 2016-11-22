@@ -5,7 +5,7 @@ ENV HTTP 80
 ENV HTTPS 443
 #
 ENV FQDN example.com
-ENV WWW_FQDN www.${FQDN}
+ENV WWW_FQDN www.example.com
 #
 ADD conf/https /https
 ADD conf/http /http
