@@ -1,7 +1,4 @@
 #!/bin/sh
-# conf files
-80_CONF=/etc/nginx/sites-enabled/http
-443_CONF=/etc/nginx/sites-enabled/https
 
 # base test and set defauln env
 WWW_FQDN=www.${FQDN}
@@ -33,35 +30,35 @@ setup_nginx_le () {
 	fi
 	if [ ! -f /http ]; then
 		mv /http /etc/nginx/sites-enabled/
-		sed -i "s|FQDN|${FQDN}|g" ${80_CONF}
-		sed -i "s|WWW_FQDN|${WWW_FQDN}|g" ${80_CONF}
-		sed -i "s|HTTP|${HTTP}|g" ${80_CONF}
+		sed -i "s|FQDN|${FQDN}|g" /etc/nginx/sites-enabled/http
+		sed -i "s|WWW_FQDN|${WWW_FQDN}|g" /etc/nginx/sites-enabled/http
+		sed -i "s|HTTP|${HTTP}|g" /etc/nginx/sites-enabled/http
 	else
-		sed -i "s|FQDN|${FQDN}|g" ${80_CONF}
-		sed -i "s|WWW_FQDN|${WWW_FQDN}|g" ${80_CONF}
-		sed -i "s|HTTP|${HTTP}|g" ${80_CONF}
+		sed -i "s|FQDN|${FQDN}|g" /etc/nginx/sites-enabled/http
+		sed -i "s|WWW_FQDN|${WWW_FQDN}|g" /etc/nginx/sites-enabled/http
+		sed -i "s|HTTP|${HTTP}|g" /etc/nginx/sites-enabled/http
 	fi
 	if [ ! -f /https ]; then
 		sed -i "s|FQDN|${FQDN}|g" /https
 		sed -i "s|WWW_FQDN|${WWW_FQDN}|g" /https
 		sed -i "s|HTTPS|${HTTPS}|g" /https
 	else
-		sed -i "s|FQDN|${FQDN}|g" ${443_CONF}
-		sed -i "s|WWW_FQDN|${WWW_FQDN}|g" ${443_CONF}
-		sed -i "s|HTTPS|${HTTPS}|g" ${443_CONF}
+		sed -i "s|FQDN|${FQDN}|g" $/etc/nginx/sites-enabled/https
+		sed -i "s|WWW_FQDN|${WWW_FQDN}|g" $/etc/nginx/sites-enabled/https
+		sed -i "s|HTTPS|${HTTPS}|g" $/etc/nginx/sites-enabled/https
 	fi
 	(
 		sleep 5 # give nginx time to start
  		while :
  		do
- 		if [ ! -f ${443_CONF} ]; then
- 			mv ${443_CONF} /
+ 		if [ ! -f $/etc/nginx/sites-enabled/https ]; then
+ 			mv $/etc/nginx/sites-enabled/https /
  			nginx -s reload
- 			/le.sh && mv /https ${443_CONF}
+ 			/le.sh && mv /https $/etc/nginx/sites-enabled/https
  			nginx -s reload
  			sleep 60d
  		else
- 			/le.sh && mv /https ${443_CONF}
+ 			/le.sh && mv /https $/etc/nginx/sites-enabled/https
  			nginx -s reload
  			sleep 60d
  		fi
